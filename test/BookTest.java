@@ -1,0 +1,13 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class BookTest {
+
+    @Test
+    void shouldReturnCorrectPrice() {
+
+        Book book = new Book("1984", "George Orwell", 42.50);
+
+        assertEquals(42.50, book.getPrice());
+    }
+}
