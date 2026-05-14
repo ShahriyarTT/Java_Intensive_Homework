@@ -1,8 +1,9 @@
-import org.junit.jupiter.api.Test;
+package com.example;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrderTest {
 

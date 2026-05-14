@@ -1,4 +1,8 @@
-public class Book {
+package com.example;
+
+import java.io.Serializable;
+
+public class Book implements Serializable  {
 
     private String title;
     private String author;
@@ -19,6 +23,17 @@ public class Book {
 
     public double getPrice() {
         return price;
+    }
+
+
+    private boolean available = true;
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
 }

@@ -1,7 +1,11 @@
+package com.example;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
 
     private int id;
     private List<Book> books;

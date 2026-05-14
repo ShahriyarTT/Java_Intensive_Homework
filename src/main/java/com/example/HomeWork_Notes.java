@@ -20,6 +20,7 @@ public class HomeWork_Notes {
         ● Complete an order given it’s currently opened
         ● List orders (with pagination) sorted by ID, total price, opening timestamp, closing
           timestamp, status
+    */
 
     //-----------------------------------------------------------------------------------------------------------
     /*
@@ -29,8 +30,7 @@ public class HomeWork_Notes {
           Desired end result can be like this:
           ○ Run tests for an opened Pull Request
           ○ Build an artifact ( jar) on push to main branch
-
-     */
+    */
 
     //-----------------------------------------------------------------------------------------------------------
     /*
@@ -40,13 +40,8 @@ public class HomeWork_Notes {
         ● Add a configuration using external file:
           ○ All projects
             ■ Location of file with serialized application state
-          ○ Hotel
-            ■ Turn on/off the ability to change apartment status
           ○ Bookstore
             ■ Turn on/off the ability to change book availability
-          ○ Car service
-            ■ Turn on/off the ability to add/delete garage slots
-
     */
 
     //-----------------------------------------------------------------------------------------------------------
@@ -56,8 +51,7 @@ public class HomeWork_Notes {
           Servlet container (e.g., Apache Tomcat)
         ● Try to follow ReST guidelines
         ● Do not use Spring Framework yet
-
-     */
+    */
 
     //-----------------------------------------------------------------------------------------------------------
     /*
@@ -66,14 +60,18 @@ public class HomeWork_Notes {
           You can even decide to use H2
         ● To access database use JDBC.
         ● To manage connections to database try to use a connection pool (e.g., Hikari)
-
-     */
+    */
 
     //-----------------------------------------------------------------------------------------------------------
     /*
         HOMEWORK #6
+        ● To access database use JPA and Hibernate.
+    */
 
-
-     */
+    //-----------------------------------------------------------------------------------------------------------
+    /*
+        HOMEWORK #7
+        ● Use Spring Boot in your web application
+    */
 
 }

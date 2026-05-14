@@ -1,6 +1,8 @@
-import java.util.Scanner;
-import java.util.ArrayList;
+package com.example;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class PlayGround {
 
@@ -8,9 +10,12 @@ public class PlayGround {
     private OrdersList orderList;
     private Scanner scanner;
 
-    public PlayGround(List<Book> availableBooks, OrdersList orderList) {
+    private AppConfigur config;
+
+    public PlayGround(List<Book> availableBooks, OrdersList orderList, AppConfigur config) {
         this.availableBooks = availableBooks;
         this.orderList = orderList;
+        this.config = config;
         this.scanner = new Scanner(System.in);
     }
 
@@ -36,9 +41,14 @@ public class PlayGround {
 
     private void printBooks() {
         System.out.println("LIST of AVAILABLE BOOKS");
+    /*
         for (int i = 0; i < availableBooks.size(); i++) {
             System.out.println(i + 1 + ": " + availableBooks.get(i));
         }
+   */
+        IntStream.range(0, availableBooks.size())
+                .forEach(i -> System.out.println((i + 1) + ": " + availableBooks.get(i)));
+
         System.out.println("*************");
     }
 
@@ -69,7 +79,19 @@ public class PlayGround {
             if (b == 0) break;
 
             if (b >= 1 && b <= availableBooks.size()) {
-                selectedBooks.add(availableBooks.get(b - 1));
+                Book selectedBook = availableBooks.get(b - 1);
+
+                if (config.isAvailabilityChangeEnabled()) {
+
+                    if (!selectedBook.isAvailable()) {
+                        System.out.println("Book is not available.");
+                        continue;
+                    }
+
+                    selectedBook.setAvailable(false);
+                }
+
+                selectedBooks.add(selectedBook);
                 System.out.println("Added.");
             } else {
                 System.out.println("Invalid.");

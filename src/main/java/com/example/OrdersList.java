@@ -1,8 +1,10 @@
-
+package com.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersList {
+import java.io.Serializable;
+
+public class OrdersList implements Serializable {
 
     private List<Order> orders = new ArrayList<>();
     private int nextId = 1;
@@ -32,11 +34,16 @@ public class OrdersList {
     }
 
     public void printOrders() {
+    /*
         for (Order o : orders) {
+
             System.out.println(o);
         }
+    */
+        orders.forEach(System.out::println);
     }
 
+/*
     private Order findById(int id) {
         for (Order o : orders) {
             if (o.getId() == id) {
@@ -44,6 +51,13 @@ public class OrdersList {
             }
         }
         return null;
+    }
+*/
+    private Order findById(int id) {
+        return orders.stream()
+                .filter(o -> o.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
 }
