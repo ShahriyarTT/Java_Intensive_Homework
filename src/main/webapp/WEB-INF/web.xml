@@ -1,0 +1,26 @@
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         version="6.0">
+
+    <servlet>
+        <servlet-name>bookServlet</servlet-name>
+        <servlet-class>com.bookstore.servlet.BookServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>bookServlet</servlet-name>
+        <url-pattern>/api/books/*</url-pattern>
+        <!-- <url-pattern>/api/*</url-pattern> -->
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>orderServlet</servlet-name>
+        <servlet-class>com.bookstore.servlet.OrderServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>orderServlet</servlet-name>
+        <url-pattern>/api/orders/*</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>

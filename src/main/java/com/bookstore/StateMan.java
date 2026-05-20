@@ -1,9 +1,11 @@
-package com.example;
+package com.bookstore;
 
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+
+import com.bookstore.model.State;
 
 public class StateMan {
 

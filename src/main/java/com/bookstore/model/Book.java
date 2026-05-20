@@ -1,4 +1,4 @@
-package com.example;
+package com.bookstore.model;
 
 import java.io.Serializable;
 

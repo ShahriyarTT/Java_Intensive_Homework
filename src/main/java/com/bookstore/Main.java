@@ -1,7 +1,12 @@
-package com.example;
+package com.bookstore;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import com.bookstore.model.Book;
+import com.bookstore.model.Order;
+import com.bookstore.model.State;
+import com.bookstore.service.OrdersList;
 
 public class Main {
 

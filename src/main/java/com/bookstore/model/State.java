@@ -1,6 +1,8 @@
-package com.example;
+package com.bookstore.model;
 import java.io.Serializable;
 import java.util.List;
+import com.bookstore.service.OrdersList;
+
 
 public class State implements Serializable {
 

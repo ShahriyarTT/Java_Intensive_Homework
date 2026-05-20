@@ -47,7 +47,7 @@ public class HomeWork_Notes {
     //-----------------------------------------------------------------------------------------------------------
     /*
         HOMEWORK #4
-        ● Migrate your application from console interface to web interface using Servlet API and
+        ● Migrate your application from console interface to ReST API using Servlet API and
           Servlet container (e.g., Apache Tomcat)
         ● Try to follow ReST guidelines
         ● Do not use Spring Framework yet
@@ -72,6 +72,15 @@ public class HomeWork_Notes {
     /*
         HOMEWORK #7
         ● Use Spring Boot in your web application
+    */
+
+    //-----------------------------------------------------------------------------------------------------------
+    /*
+        HOMEWORK #8
+        ● Write migrations for your DB schema
+        ● [OPTIONAL] Test your application with new database using Testcontainers library
+        ● Create a Dockerfile using best practices
+        ● Create a docker-compose.yml to run your application with all dependencies
     */
 
 }
