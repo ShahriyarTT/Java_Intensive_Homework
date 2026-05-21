@@ -17,36 +17,70 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bookstore.database.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 @WebServlet("/orders")
 public class OrderServlet extends HttpServlet {
 
     private OrdersList ordersList;
     private ObjectMapper mapper;
-    private List<Book> availableBooks;
+    // private List<Book> availableBooks;
 
     @Override
     public void init() throws ServletException {
 
         ordersList = new OrdersList();
         mapper = new ObjectMapper();
-        availableBooks = new ArrayList<>();
+        // availableBooks = new ArrayList<>();
 
-        availableBooks.add(new Book("Sapiens", "Yuval Noah Harari", 10.00));
-        availableBooks.add(new Book("The 48 Laws of Power", "Robert Greene", 24.99));
-        availableBooks.add(new Book("The Art of War", "Sun Tzu", 19.99));
-        availableBooks.add(new Book("1984", "George Orwell", 42.50));
-        availableBooks.add(new Book("Principles of Economics", "N. Gregory Mankiw", 30.50));
-        availableBooks.add(new Book("Getting Things Done", "David Allen", 19.99));
-        availableBooks.add(new Book("Rich Dad Poor Dad", "Robert Kiyosaki", 19.99));
-        availableBooks.add(new Book("How google works", "Eric Schmidt", 19.99));
-        availableBooks.add(new Book("Endurance", "Alfred Lansing", 19.99));
-        availableBooks.add(new Book("Telling lies", "Paul Ekman", 19.99));
-        availableBooks.add(new Book("The Hidden Persuaders", "Vance Packard", 19.99));
-        availableBooks.add(new Book("Muhammad", "Martin Lings", 19.99));
-        availableBooks.add(new Book("The Prince", "Niccolo Machiavelli", 19.99));
-
+        /*
+        availableBooks.add(new Book(1, "Sapiens", "Yuval Noah Harari", 10.00));
+        availableBooks.add(new Book(2, "The 48 Laws of Power", "Robert Greene", 24.99));
+        availableBooks.add(new Book(3, "The Art of War", "Sun Tzu", 19.99));
+        availableBooks.add(new Book(4, "1984", "George Orwell", 42.50));
+        availableBooks.add(new Book(5, "Principles of Economics", "N. Gregory Mankiw", 30.50));
+        availableBooks.add(new Book(6, "Getting Things Done", "David Allen", 19.99));
+        availableBooks.add(new Book(7, "Rich Dad Poor Dad", "Robert Kiyosaki", 19.99));
+        availableBooks.add(new Book(8, "How google works", "Eric Schmidt", 19.99));
+        availableBooks.add(new Book(9, "Endurance", "Alfred Lansing", 19.99));
+        availableBooks.add(new Book(10, "Telling lies", "Paul Ekman", 19.99));
+        availableBooks.add(new Book(11, "The Hidden Persuaders", "Vance Packard", 19.99));
+        availableBooks.add(new Book(12, "Muhammad", "Martin Lings", 19.99));
+        availableBooks.add(new Book(13, "The Prince", "Niccolo Machiavelli", 19.99));
+         */
 
         System.out.println("OrderServlet initialized");
+    }
+
+    private Book findBookById(int id) {
+
+        String sql = "SELECT id, title, author, price FROM books WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Book(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getDouble("price")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 
     // GET /api/orders
@@ -76,8 +110,19 @@ public class OrderServlet extends HttpServlet {
 
         for (BookRequest requestedBook : request.getBooks()) {
 
-            boolean found = false;
+            // boolean found = false;
+            Book book = findBookById(requestedBook.getBookId());
 
+            if (book == null) {
+                resp.sendError(
+                        HttpServletResponse.SC_BAD_REQUEST,
+                        "Book not found with id: " + requestedBook.getBookId()
+                );
+                return;
+            }
+
+            selectedBooks.add(book);
+            /*
             for (Book book : availableBooks) {
 
                 if (book.getTitle().equalsIgnoreCase(requestedBook.getTitle())
@@ -96,6 +141,8 @@ public class OrderServlet extends HttpServlet {
                 );
                 return;
             }
+
+             */
         }
 
         Order order = ordersList.openOrder(selectedBooks);

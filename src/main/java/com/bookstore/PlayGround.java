@@ -70,7 +70,7 @@ public class PlayGround {
             case 1 -> openOrder();
             case 2 -> completeOrder();
             case 3 -> cancelOrder();
-            case 4 -> orderList.printOrders();
+            // case 4 -> orderList.printOrders(); no need due to SQL DB
         }
     }
 

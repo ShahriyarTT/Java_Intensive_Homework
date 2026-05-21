@@ -2,6 +2,7 @@ package com.bookstore.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
 
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ public class Order implements Serializable {
     private LocalDateTime openedAt;
     private LocalDateTime closedAt;
 
-    public Order(int id, List<Book> books) {
+    /*public Order(int id, List<Book> books) {
         this.id = id;
         this.books = books;
         this.status = Status.OPEN;
@@ -24,6 +25,17 @@ public class Order implements Serializable {
         for (Book book : books) {
             this.totalPrice += book.getPrice();
         }
+    }
+         */
+
+    public Order(int id, double totalPrice, Status status) {
+        this.id = id;
+        this.totalPrice = totalPrice;
+        this.status = status;
+
+        this.books = new ArrayList<>();
+        this.openedAt = null;
+        this.closedAt = null;
     }
 
     @Override

@@ -1,5 +1,8 @@
+/*
 package com.bookstore;
+ */
 
+/*
 import java.util.List;
 import java.util.ArrayList;
 
@@ -28,6 +31,7 @@ public class Main {
     }
 */
 
+/*
     public static void main(String[] args) {
 
         AppConfigur config = new AppConfigur();
@@ -72,3 +76,5 @@ public class Main {
     }
 
 }
+
+ */
