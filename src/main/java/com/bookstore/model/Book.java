@@ -24,6 +24,8 @@ public class Book implements Serializable  {
     public double getPrice() {
         return price;
     }
+    public String getTitle() { return title; }
+    public String getAuthor() { return author; }
 
 
     private boolean available = true;
