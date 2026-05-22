@@ -1,9 +1,9 @@
 package com.bookstore;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.IntStream;
-
 import com.bookstore.model.Book;
 import com.bookstore.model.Order;
 import com.bookstore.service.OrdersList;

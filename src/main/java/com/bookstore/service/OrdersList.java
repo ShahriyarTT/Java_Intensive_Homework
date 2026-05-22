@@ -1,11 +1,10 @@
 package com.bookstore.service;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.bookstore.model.Order;
 import com.bookstore.model.Book;
-
 import java.io.Serializable;
-
 import com.bookstore.database.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +28,7 @@ public class OrdersList implements Serializable {
     }
 */
 
-    /*
+/*
     public Order openOrder(List<Book> books) {
         try (
                 Connection conn = DBConnection.getConnection();
@@ -57,10 +56,14 @@ public class OrdersList implements Serializable {
             throw new RuntimeException(e);
         }
     }
-     */
+*/
 
     public Order openOrder(List<Book> books) {
-        try (Connection conn = DBConnection.getConnection()) {
+        Connection conn = null;
+
+        try {
+            conn = DBConnection.getConnection();
+            conn.setAutoCommit(false);
 
             // 1. create order
             PreparedStatement orderStmt = conn.prepareStatement(
@@ -94,7 +97,7 @@ public class OrdersList implements Serializable {
                 itemStmt.executeBatch();
             }
 
-            /*
+        /*
             for (Book book : books) {
                 itemStmt.setInt(1, orderId);
                 itemStmt.setInt(2, book.getId());
@@ -102,13 +105,32 @@ public class OrdersList implements Serializable {
                 itemStmt.addBatch();
             }
             itemStmt.executeBatch();
-             */
+        */
 
+            conn.commit();
             // return new Order(orderId, books);
             return new Order(orderId, totalPrice, Order.Status.OPEN);
 
         } catch (SQLException e) {
+
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
             throw new RuntimeException(e);
+        }
+        finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

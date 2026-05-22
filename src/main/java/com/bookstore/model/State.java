@@ -3,7 +3,6 @@ import java.io.Serializable;
 import java.util.List;
 import com.bookstore.service.OrdersList;
 
-
 public class State implements Serializable {
 
     private List<Book> books;
@@ -17,7 +16,6 @@ public class State implements Serializable {
     public List<Book> getBooks() {
         return books;
     }
-
     public OrdersList getOrdersList() {
         return ordersList;
     }

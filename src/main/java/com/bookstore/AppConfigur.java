@@ -39,9 +39,6 @@ public class AppConfigur {
     public String getStateFile() {
         return stateFile;
     }
-
-
-
     public boolean isAvailabilityChangeEnabled() {
         return availabilityChangeEnabled;
     }
