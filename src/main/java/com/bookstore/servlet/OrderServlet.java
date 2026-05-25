@@ -27,30 +27,12 @@
 
         private OrdersList ordersList;
         private ObjectMapper mapper;
-        // private List<Book> availableBooks;
 
         @Override
         public void init() throws ServletException {
 
             ordersList = new OrdersList();
             mapper = new ObjectMapper();
-            // availableBooks = new ArrayList<>();
-
-        /*
-            availableBooks.add(new Book(1, "Sapiens", "Yuval Noah Harari", 10.00));
-            availableBooks.add(new Book(2, "The 48 Laws of Power", "Robert Greene", 24.99));
-            availableBooks.add(new Book(3, "The Art of War", "Sun Tzu", 19.99));
-            availableBooks.add(new Book(4, "1984", "George Orwell", 42.50));
-            availableBooks.add(new Book(5, "Principles of Economics", "N. Gregory Mankiw", 30.50));
-            availableBooks.add(new Book(6, "Getting Things Done", "David Allen", 19.99));
-            availableBooks.add(new Book(7, "Rich Dad Poor Dad", "Robert Kiyosaki", 19.99));
-            availableBooks.add(new Book(8, "How google works", "Eric Schmidt", 19.99));
-            availableBooks.add(new Book(9, "Endurance", "Alfred Lansing", 19.99));
-            availableBooks.add(new Book(10, "Telling lies", "Paul Ekman", 19.99));
-            availableBooks.add(new Book(11, "The Hidden Persuaders", "Vance Packard", 19.99));
-            availableBooks.add(new Book(12, "Muhammad", "Martin Lings", 19.99));
-            availableBooks.add(new Book(13, "The Prince", "Niccolo Machiavelli", 19.99));
-        */
 
             System.out.println("OrderServlet initialized");
         }
@@ -68,7 +50,7 @@
 
                 if (rs.next()) {
                     return new Book(
-                            rs.getInt("id"),
+                            // rs.getInt("id"),
                             rs.getString("title"),
                             rs.getString("author"),
                             rs.getDouble("price")
@@ -121,27 +103,7 @@
                 }
 
                 selectedBooks.add(book);
-                /*
-                for (Book book : availableBooks) {
 
-                    if (book.getTitle().equalsIgnoreCase(requestedBook.getTitle())
-                            && book.getAuthor().equalsIgnoreCase(requestedBook.getAuthor())) {
-                        selectedBooks.add(book);
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) {
-                    resp.sendError(
-                            HttpServletResponse.SC_BAD_REQUEST,
-                            "Book not found: " + requestedBook.getTitle()
-                                    + " by " + requestedBook.getAuthor()
-                    );
-                    return;
-                }
-
-                 */
             }
 
             Order order = ordersList.openOrder(selectedBooks);

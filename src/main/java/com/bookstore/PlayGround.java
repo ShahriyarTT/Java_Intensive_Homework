@@ -46,11 +46,7 @@ public class PlayGround {
 
     private void printBooks() {
         System.out.println("LIST of AVAILABLE BOOKS");
-    /*
-        for (int i = 0; i < availableBooks.size(); i++) {
-            System.out.println(i + 1 + ": " + availableBooks.get(i));
-        }
-   */
+
         IntStream.range(0, availableBooks.size())
                 .forEach(i -> System.out.println((i + 1) + ": " + availableBooks.get(i)));
 

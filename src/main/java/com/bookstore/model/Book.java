@@ -1,20 +1,28 @@
 package com.bookstore.model;
 
 import java.io.Serializable;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "books")
 public class Book implements Serializable  {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
     private String author;
     private double price;
     private boolean available = true;
 
-    public Book(int id, String title, String author, double price) {
-        this.id = id;
+    public Book(String title, String author, double price) {
+        // this.id = id;
         this.title = title;
         this.author = author;
         this.price = price;
+    }
+
+    public Book() {
     }
 
     public int getId() {

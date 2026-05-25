@@ -15,49 +15,6 @@ import java.util.Map;
 
 public class OrdersList implements Serializable {
 
-/*  Note: deleted due to SQL database to store application state
-    private List<Order> orders = new ArrayList<>();
-    private int nextId = 1;
-*/
-
-/*  Note: deleted due to SQL database to store application state
-    public Order openOrder(List<Book> books) {
-        Order order = new Order(nextId++, books);
-        orders.add(order);
-        return order;
-    }
-*/
-
-/*
-    public Order openOrder(List<Book> books) {
-        try (
-                Connection conn = DBConnection.getConnection();
-
-                PreparedStatement orderStmt = conn.prepareStatement(
-                        // "INSERT INTO orders (status) VALUES (?) RETURNING id"
-                        "INSERT INTO orders (status, total_price) VALUES (?, ?) RETURNING id"
-                )
-        ) {
-            orderStmt.setString(1, "OPEN");
-            double totalPrice = books.stream()
-                    .mapToDouble(Book::getPrice)
-                    .sum();
-
-            orderStmt.setDouble(2, totalPrice);
-
-            ResultSet rs = orderStmt.executeQuery();
-            rs.next();
-            int orderId = rs.getInt("id");
-
-            Order order = new Order(orderId, books);
-            return order;
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-*/
-
     public Order openOrder(List<Book> books) {
         Connection conn = null;
 
@@ -97,16 +54,6 @@ public class OrdersList implements Serializable {
                 itemStmt.executeBatch();
             }
 
-        /*
-            for (Book book : books) {
-                itemStmt.setInt(1, orderId);
-                itemStmt.setInt(2, book.getId());
-                itemStmt.setDouble(3, book.getPrice());
-                itemStmt.addBatch();
-            }
-            itemStmt.executeBatch();
-        */
-
             conn.commit();
             // return new Order(orderId, books);
             return new Order(orderId, totalPrice, Order.Status.OPEN);
@@ -134,15 +81,6 @@ public class OrdersList implements Serializable {
         }
     }
 
-/*  Note: modified due to SQL database to store application state
-    public void completeOrder(int id) {
-        Order order = findById(id);
-        if (order != null) {
-            order.complete();
-        }
-    }
-*/
-
     public void completeOrder(int id) {
         try (
                 Connection conn = DBConnection.getConnection();
@@ -158,15 +96,6 @@ public class OrdersList implements Serializable {
             throw new RuntimeException(e);
         }
     }
-
-/*  Note: modified due to SQL database to store application state
-    public void cancelOrder(int id) {
-        Order order = findById(id);
-        if (order != null) {
-            order.cancel();
-        }
-    }
-*/
 
     public void cancelOrder(int id) {
         try (
@@ -184,12 +113,6 @@ public class OrdersList implements Serializable {
         }
     }
 
-/*  Note: modified due to SQL database to store application state
-    public List<Order> getOrders() {
-        return orders;
-    }
-*/
-
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
 
@@ -206,24 +129,6 @@ public class OrdersList implements Serializable {
                 ResultSet rs = stmt.executeQuery()
         ) {
 
-        /*
-            while (rs.next()) {
-                int id = rs.getInt("id");
-
-                // temporary: empty book list for now
-                Order order = new Order(id, new ArrayList<>());
-
-                String status = rs.getString("status");
-
-                if ("COMPLETED".equals(status)) {
-                    order.complete();
-                } else if ("CANCELLED".equals(status)) {
-                    order.cancel();
-                }
-
-                orders.add(order);
-            }
-        */
             Map<Integer, Order> map = new HashMap<>();
 
             while (rs.next()) {
@@ -252,15 +157,6 @@ public class OrdersList implements Serializable {
                     orders.add(order);
                 }
 
-                // books ignored for now (safe)
-                /*// set correct status manually (NO logic execution)
-                if ("COMPLETED".equals(status)) {
-                    // do nothing, just informational
-                } else if ("CANCELLED".equals(status)) {
-                    // do nothing
-                }
-                 */
-
             }
 
         } catch (SQLException e) {
@@ -269,31 +165,5 @@ public class OrdersList implements Serializable {
 
         return orders;
     }
-
-/*  Note: removed completely due to SQL database to store application state
-    public void printOrders() {
-        orders.forEach(System.out::println);
-    }
-*/
-
-/*
-    private Order findById(int id) {
-        for (Order o : orders) {
-            if (o.getId() == id) {
-                return o;
-            }
-        }
-        return null;
-    }
-*/
-
-/*  Note: removed completely due to SQL database to store application state
-    private Order findById(int id) {
-        return orders.stream()
-                .filter(o -> o.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-*/
 
 }

@@ -14,19 +14,6 @@ public class Order implements Serializable {
     private LocalDateTime openedAt;
     private LocalDateTime closedAt;
 
-/*
-    public Order(int id, List<Book> books) {
-        this.id = id;
-        this.books = books;
-        this.status = Status.OPEN;
-        this.openedAt = LocalDateTime.now();
-        this.totalPrice = 0;
-        for (Book book : books) {
-            this.totalPrice += book.getPrice();
-        }
-    }
-*/
-
     public Order(int id, double totalPrice, Status status) {
         this.id = id;
         this.totalPrice = totalPrice;
