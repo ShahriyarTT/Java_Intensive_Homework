@@ -1,5 +1,3 @@
-public class HomeWork_Notes {
-
     //-----------------------------------------------------------------------------------------------------------
     /*
         HOMEWORK #1
@@ -83,4 +81,5 @@ public class HomeWork_Notes {
         ● Create a docker-compose.yml to run your application with all dependencies
     */
 
-}
+
+

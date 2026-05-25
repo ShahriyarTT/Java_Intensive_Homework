@@ -6,7 +6,7 @@
     import com.fasterxml.jackson.databind.ObjectMapper;
     import com.bookstore.datatransfer.CreateOrderRequest;
     import com.bookstore.datatransfer.BookRequest;
-    import com.bookstore.database.DBConnection;
+    // import com.bookstore.database.DBConnection;
 
     import jakarta.servlet.ServletException;
     import jakarta.servlet.http.HttpServlet;
@@ -17,10 +17,12 @@
     import java.io.IOException;
     import java.util.ArrayList;
     import java.util.List;
-    import java.sql.Connection;
-    import java.sql.PreparedStatement;
-    import java.sql.ResultSet;
-    import java.sql.SQLException;
+    // import java.sql.Connection;
+    // import java.sql.PreparedStatement;
+    // import java.sql.ResultSet;
+    // import java.sql.SQLException;
+    import com.bookstore.database.JpaUtil;
+    import jakarta.persistence.EntityManager;
 
     @WebServlet("/orders")
     public class OrderServlet extends HttpServlet {
@@ -38,30 +40,15 @@
         }
 
         private Book findBookById(int id) {
+            EntityManager em =
+                    JpaUtil.getEntityManagerFactory().createEntityManager();
 
-            String sql = "SELECT id, title, author, price FROM books WHERE id = ?";
+            try {
+                return em.find(Book.class, id);
 
-            try (Connection conn = DBConnection.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-                stmt.setInt(1, id);
-
-                ResultSet rs = stmt.executeQuery();
-
-                if (rs.next()) {
-                    return new Book(
-                            // rs.getInt("id"),
-                            rs.getString("title"),
-                            rs.getString("author"),
-                            rs.getDouble("price")
-                    );
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            } finally {
+                em.close();
             }
-
-            return null;
         }
 
         // GET /api/orders

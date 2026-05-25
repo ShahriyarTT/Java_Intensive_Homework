@@ -1,67 +1,66 @@
 package com.bookstore.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.ArrayList;
+import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "orders")
 public class Order implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private List<Book> books;
-    private double totalPrice;
+    @Enumerated(EnumType.STRING)
     private Status status;
+    private double totalPrice;
     private LocalDateTime openedAt;
     private LocalDateTime closedAt;
 
-    public Order(int id, double totalPrice, Status status) {
-        this.id = id;
+    public Order() {
+    }
+
+    // constructor
+    public Order(double totalPrice, Status status) {
         this.totalPrice = totalPrice;
         this.status = status;
-        this.books = new ArrayList<>();
-        this.openedAt = null;
-        this.closedAt = null;
+        this.openedAt = LocalDateTime.now();
     }
 
-    @Override
-    public String toString() {
-        return "Order #" + id +
-               " | Books count: " + books.size() + " item(s)" +
-               " | Total Price: " + totalPrice + " USD" +
-               " | Status: " + status +
-               " | Opened at: " + openedAt +
-               " | Closed/Completed at: " + closedAt;
-    }
+    // Getters
+    public int getId() {return id;    }
+    public Status getStatus() {return status;    }
+    public double getTotalPrice() {return totalPrice;    }
+    public LocalDateTime getOpenedAt() {return openedAt;    }
+    public LocalDateTime getClosedAt() {return closedAt;    }
 
-    public int getId() {
-        return id;
-    }
-    public Status getStatus() {
-        return status;
-    }
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public enum Status {
-        OPEN,
-        COMPLETED,
-        CANCELLED
-    }
-
+    // Business logic
     public void complete() {
         if (status != Status.OPEN) return;
         status = Status.COMPLETED;
         closedAt = LocalDateTime.now();
-        System.out.println("Order completed.");
     }
 
     public void cancel() {
         if (status != Status.OPEN) return;
         status = Status.CANCELLED;
         closedAt = LocalDateTime.now();
-        System.out.println("Order cancelled.");
     }
 
-}
+    // Enum
+    public enum Status {
+        OPEN,
+        COMPLETED,
+        CANCELLED
+    }
 
+    // toString
+    @Override
+    public String toString() {
+        return "Order #" + id +
+                " | Total Price: " + totalPrice +
+                " | Status: " + status +
+                " | Opened at: " + openedAt +
+                " | Closed at: " + closedAt;
+    }
+}

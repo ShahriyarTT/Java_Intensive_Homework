@@ -1,4 +1,4 @@
-package com.bookstore.database;
+/*package com.bookstore.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -22,3 +22,5 @@ public class DBConnection {
         return dataSource.getConnection();
     }
 }
+
+ */
