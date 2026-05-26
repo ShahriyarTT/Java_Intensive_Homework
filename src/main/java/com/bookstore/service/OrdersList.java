@@ -25,7 +25,7 @@ public class OrdersList implements Serializable {
                     .sum();
 
             // 2. create order entity
-            Order order = new Order(totalPrice, Order.Status.OPEN);
+            Order order = new Order( books, totalPrice, Order.Status.OPEN );
 
             // 3. persist order
             em.persist(order);
@@ -106,7 +106,7 @@ public class OrdersList implements Serializable {
 
         try {
             return em.createQuery(
-                    "FROM Order",
+                    "SELECT o FROM Order o",
                     Order.class
             ).getResultList();
 

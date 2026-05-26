@@ -52,7 +52,7 @@
         }
 
         // GET /api/orders
-        @Override
+        /*@Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws IOException {
 
@@ -60,6 +60,27 @@
             mapper.writeValue(
                     resp.getOutputStream(),
                     ordersList.getOrders()
+            );
+        }
+
+         */
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+                throws IOException {
+
+            List<Order> orders = ordersList.getOrders();
+            System.out.println("Orders size = " + orders.size());
+            for (Order o : orders) {
+                System.out.println(
+                        "Order id = " + o.getId()
+                                + ", books = " + o.getBooks().size()
+                );
+            }
+
+            resp.setContentType("application/json");
+            mapper.writeValue(
+                    resp.getOutputStream(),
+                    orders
             );
         }
 
