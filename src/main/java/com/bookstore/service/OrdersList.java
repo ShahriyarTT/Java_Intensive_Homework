@@ -19,23 +19,27 @@ public class OrdersList implements Serializable {
         try {
             tx.begin();
 
-            // 1. calculate total price
             double totalPrice = books.stream()
                     .mapToDouble(Book::getPrice)
                     .sum();
 
-            // 2. create order entity
-            Order order = new Order( books, totalPrice, Order.Status.OPEN );
+            Order order = new Order(books, totalPrice, Order.Status.OPEN);
 
-            // 3. persist order
             em.persist(order);
+
             tx.commit();
-            return order;
+
+            // 🔥 IMPORTANT: reload FULL entity with books initialized
+            Order savedOrder = em.createQuery(
+                            "SELECT o FROM Order o JOIN FETCH o.books WHERE o.id = :id",
+                            Order.class)
+                    .setParameter("id", order.getId())
+                    .getSingleResult();
+
+            return savedOrder;
 
         } catch (Exception e) {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
+            if (tx.isActive()) tx.rollback();
             throw new RuntimeException(e);
 
         } finally {
@@ -106,7 +110,7 @@ public class OrdersList implements Serializable {
 
         try {
             return em.createQuery(
-                    "SELECT o FROM Order o",
+                    "SELECT DISTINCT o FROM Order o JOIN FETCH o.books",
                     Order.class
             ).getResultList();
 
@@ -117,5 +121,7 @@ public class OrdersList implements Serializable {
             em.close();
         }
     }
+
+
 
 }

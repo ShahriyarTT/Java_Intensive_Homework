@@ -7,6 +7,8 @@
     import com.bookstore.datatransfer.CreateOrderRequest;
     import com.bookstore.datatransfer.BookRequest;
     // import com.bookstore.database.DBConnection;
+    import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+    import com.fasterxml.jackson.databind.SerializationFeature;
 
     import jakarta.servlet.ServletException;
     import jakarta.servlet.http.HttpServlet;
@@ -32,9 +34,11 @@
 
         @Override
         public void init() throws ServletException {
-
             ordersList = new OrdersList();
             mapper = new ObjectMapper();
+
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
             System.out.println("OrderServlet initialized");
         }
@@ -109,13 +113,11 @@
                     );
                     return;
                 }
-
                 selectedBooks.add(book);
 
             }
 
             Order order = ordersList.openOrder(selectedBooks);
-
             resp.setContentType("application/json");
             mapper.writeValue(resp.getOutputStream(), order);
         }
