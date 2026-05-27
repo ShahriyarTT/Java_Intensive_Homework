@@ -22,6 +22,8 @@ public class Order implements Serializable {
     @Enumerated(EnumType.STRING)
 
     private Status status;
+
+    @Column(name = "totalprice")
     private double totalPrice;
     private LocalDateTime openedAt;
     private LocalDateTime closedAt;
