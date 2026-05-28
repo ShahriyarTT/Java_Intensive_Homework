@@ -1,55 +1,62 @@
 package com.bookstore.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.bookstore.model.Order;
 import com.bookstore.model.Book;
-import java.io.Serializable;
-// import com.bookstore.database.JpaUtil;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
+import com.bookstore.model.Order;
+import com.bookstore.repository.OrderRepository;
 import org.springframework.stereotype.Service;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
-public class OrdersList implements Serializable {
+public class OrdersList {
 
-    @PersistenceContext
-    private EntityManager em;
+    private final OrderRepository orderRepository;
+
+    public OrdersList(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     public Order openOrder(List<Book> books) {
+
         double totalPrice = books.stream()
                 .mapToDouble(Book::getPrice)
                 .sum();
 
-        Order order = new Order(books, totalPrice, Order.Status.OPEN);
-        em.persist(order);
-        return order;
+        // validate availability
+        for (Book b : books) {
+            if (!b.isAvailable()) {
+                throw new RuntimeException("Book not available: " + b.getTitle());
+            }
+        }
+
+        Order order = new Order(
+                books,
+                totalPrice,
+                Order.Status.OPEN
+        );
+
+        return orderRepository.save(order);
     }
 
+
     public void completeOrder(int id) {
-        Order order = em.find(Order.class, id);
-        if (order != null) {
-            order.complete();
-        }
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
+
+        order.complete();
+        orderRepository.save(order); // optional but explicit
     }
 
     public void cancelOrder(int id) {
-        Order order = em.find(Order.class, id);
-        if (order != null) {
-            order.cancel();
-        }
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
+
+        order.cancel();
+        orderRepository.save(order); // optional but explicit
     }
 
     public List<Order> getOrders() {
-        return em.createQuery(
-                "SELECT DISTINCT o FROM Order o JOIN FETCH o.books",
-                Order.class
-        ).getResultList();
+        return orderRepository.findAll();
     }
-
-
-
 }
