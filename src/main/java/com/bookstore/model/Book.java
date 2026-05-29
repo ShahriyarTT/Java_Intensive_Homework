@@ -3,6 +3,7 @@ package com.bookstore.model;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "books")

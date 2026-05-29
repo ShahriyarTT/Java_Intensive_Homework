@@ -1,5 +1,7 @@
+/*
+
     //-----------------------------------------------------------------------------------------------------------
-    /*
+
         HOMEWORK #1
         ● Pick a project
         ● Implement required functionality
@@ -18,20 +20,18 @@
         ● Complete an order given it’s currently opened
         ● List orders (with pagination) sorted by ID, total price, opening timestamp, closing
           timestamp, status
-    */
 
     //-----------------------------------------------------------------------------------------------------------
-    /*
+
         HOMEWORK #2
         ● Write tests for your existing solution. Optionally, add some integration tests.
         ● Configure a CI pipeline for your repository. You can use GitHub Actions, GitLab CI or even Jenkins.
           Desired end result can be like this:
           ○ Run tests for an opened Pull Request
           ○ Build an artifact ( jar) on push to main branch
-    */
 
     //-----------------------------------------------------------------------------------------------------------
-    /*
+
         HOMEWORK #3
         ● Replace loops with Stream API where it makes sense
         ● Serialize/deserialize the state of the application and store it on disk.
@@ -40,45 +40,41 @@
             ■ Location of file with serialized application state
           ○ Bookstore
             ■ Turn on/off the ability to change book availability
-    */
 
     //-----------------------------------------------------------------------------------------------------------
-    /*
+
         HOMEWORK #4
         ● Migrate your application from console interface to ReST API using Servlet API and
           Servlet container (e.g., Apache Tomcat)
         ● Try to follow ReST guidelines
         ● Do not use Spring Framework yet
-    */
 
     //-----------------------------------------------------------------------------------------------------------
-    /*
+
         HOMEWORK #5
         ● Use a proper relational database to store application state (e.g., PostgreSQL, MySQL).
           You can even decide to use H2
         ● To access database use JDBC.
         ● To manage connections to database try to use a connection pool (e.g., Hikari)
-    */
 
     //-----------------------------------------------------------------------------------------------------------
-    /*
+
         HOMEWORK #6
         ● To access database use JPA and Hibernate.
-    */
 
     //-----------------------------------------------------------------------------------------------------------
-    /*
+
         HOMEWORK #7
         ● Use Spring Boot in your web application
-    */
 
     //-----------------------------------------------------------------------------------------------------------
-    /*
+
         HOMEWORK #8
         ● Write migrations for your DB schema
         ● [OPTIONAL] Test your application with new database using Testcontainers library
         ● Create a Dockerfile using best practices
         ● Create a docker-compose.yml to run your application with all dependencies
+
     */
 
 
